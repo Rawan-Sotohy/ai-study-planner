@@ -1,0 +1,32 @@
+# API Keys & Environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+.Python
+
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Data & Uploads 
+data/uploads/
+data/vectorstores/
+
+# Outputs 
+outputs/plans/
+outputs/summaries/
+
+# Jupyter Notebooks checkpoints
+notebooks/.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
