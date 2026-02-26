@@ -12,14 +12,18 @@ from src.summary_generator import generate_summary, save_summary
 from src.config import UPLOADS_PATH, OUTPUTS_PATH
 
 
+# --------------------------------------------------
 # Page Config
+# --------------------------------------------------
 
 st.set_page_config(page_title="AI Study Planner", page_icon="📚", layout="wide")
 st.title("📚 AI Study Planner")
 st.markdown("Smart AI-powered personalized study planner")
 
 
+# --------------------------------------------------
 # Session State Init
+# --------------------------------------------------
 
 if "student_name" not in st.session_state:
     st.session_state.student_name = ""
@@ -37,15 +41,27 @@ if "generated_plan" not in st.session_state:
     st.session_state.generated_plan = []
 
 
+# --------------------------------------------------
 # Sidebar Navigation
+# --------------------------------------------------
 
 step = st.sidebar.radio(
     "Navigation",
     ["1️⃣ Student Info", "2️⃣ Upload Subjects", "3️⃣ Generate Plan"]
 )
 
+st.sidebar.divider()
+st.sidebar.markdown("### 📚 Study Types")
+st.sidebar.markdown("""
+**📖 Reading**: Learn new easy topics  
+**✍️ Practice**: Solve problems & exercises  
+**🔄 Revision**: Review all material
+""")
 
+
+# ==================================================
 # STEP 1 — Student Info
+# ==================================================
 
 if step == "1️⃣ Student Info":
 
@@ -71,7 +87,9 @@ if step == "1️⃣ Student Info":
     st.success("Go to 'Upload Subjects' from sidebar.")
 
 
+# ==================================================
 # STEP 2 — Upload Subjects
+# ==================================================
 
 elif step == "2️⃣ Upload Subjects":
 
@@ -147,8 +165,9 @@ elif step == "2️⃣ Upload Subjects":
             st.info("Now go to 'Generate Plan'.")
 
 
-
+# ==================================================
 # STEP 3 — Generate Plan
+# ==================================================
 
 elif step == "3️⃣ Generate Plan":
 
@@ -160,7 +179,7 @@ elif step == "3️⃣ Generate Plan":
 
     generate_summaries = st.checkbox("Generate AI Summaries for Top Topics?")
 
-    if st.button("Generate My Smart Plan", use_container_width=True):
+    if st.button("Generate My Smart Plan", width="stretch"):
 
         profile = StudentProfile(
             student_name=st.session_state.student_name,
@@ -226,7 +245,9 @@ elif step == "3️⃣ Generate Plan":
             st.error(f"Error: {e}")
 
 
+    # --------------------------------------------------
     # DISPLAY SUBJECT TABS
+    # --------------------------------------------------
 
     if st.session_state.generated_plan:
 
@@ -255,7 +276,7 @@ elif step == "3️⃣ Generate Plan":
                     df["date"] = df["date"].dt.strftime("%Y-%m-%d")
 
                     st.subheader("Study Plan")
-                    st.dataframe(df, use_container_width=True)
+                    st.dataframe(df, width='stretch')
 
                     st.metric(
                         "Total Study Hours",
