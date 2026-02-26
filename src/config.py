@@ -18,7 +18,7 @@ SUMMARIES_PATH = "outputs/summaries"
 # RAG Settings
 CHUNK_SIZE = 800
 CHUNK_OVERLAP = 100
-RETRIEVAL_K = 10
+RETRIEVAL_K = 6
 
 # Study Settings
 DEFAULT_DAILY_HOURS = 3
