@@ -1,6 +1,6 @@
 from langchain_groq import ChatGroq
-from src.pdf_reader import load_vector_store
-from src.config import *
+from pdf_reader import load_vector_store
+from config import *
 import os
 
 def generate_summary(subject_name, topic_name):
