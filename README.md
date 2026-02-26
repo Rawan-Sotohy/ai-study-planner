@@ -26,6 +26,14 @@ Smart AI-powered personalized study planner that uses RAG (Retrieval-Augmented G
 
 ---
 
+## 🌐 Live Demo
+
+You can try the web application here:
+
+AI Study Planner App 👉 [Live Demo](https://ai-study-planner-2026.streamlit.app/)
+
+---
+
 ## 🚀 Installation
 
 1. **Clone the repository**
@@ -103,4 +111,5 @@ python -m streamlit run src/ui.py
    - **Hard topics**: 33% Reading + 67% Practice
 5. Reserve 25% of time for Revision
 6. Add "Final Exam Preparation" before exam
+
 
