@@ -4,12 +4,12 @@ from datetime import date
 import os
 import shutil
 
-from src.data_input import SubjectInput, StudentProfile, validate_profile
-from src.pdf_reader import load_and_chunk_pdf, create_vector_store
-from src.topic_analyzer import extract_topics
-from src.scheduler import generate_schedule
-from src.summary_generator import generate_summary, save_summary
-from src.config import UPLOADS_PATH, OUTPUTS_PATH
+from data_input import SubjectInput, StudentProfile, validate_profile
+from pdf_reader import load_and_chunk_pdf, create_vector_store
+from topic_analyzer import extract_topics
+from scheduler import generate_schedule
+from summary_generator import generate_summary, save_summary
+from config import UPLOADS_PATH, OUTPUTS_PATH
 
 
 # --------------------------------------------------
