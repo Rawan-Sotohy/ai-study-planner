@@ -1,33 +1,46 @@
-import os
 from langchain_groq import ChatGroq
-from src.prompts import SUMMARY_PROMPT
 from src.pdf_reader import load_vector_store
-from src.config import GROQ_API_KEY, MODEL_NAME, SUMMARIES_PATH
+from src.config import *
+import os
 
-def generate_summary(subject_name: str, topic_name: str) -> str:
+def generate_summary(subject_name, topic_name):
+
     vector_store = load_vector_store(subject_name)
-    docs = vector_store.similarity_search(topic_name, k=4)
-    context = "\n\n".join([doc.page_content for doc in docs])
+    docs = vector_store.similarity_search(topic_name, k=5)
+    context = "\n\n".join([d.page_content for d in docs])
 
-    llm = ChatGroq(api_key=GROQ_API_KEY, model_name=MODEL_NAME, temperature=0.3)
-    chain = SUMMARY_PROMPT | llm
+    llm = ChatGroq(
+        api_key=GROQ_API_KEY,
+        model_name=MODEL_NAME,
+        temperature=0.3
+    )
 
-    response = chain.invoke({
-        "topic_name": topic_name,
-        "context": context
-    })
-    return response.content
+    prompt = f"""
+Write a structured revision summary for:
 
-def save_summary(subject_name: str, topic_name: str, summary: str):
-    folder = f"{SUMMARIES_PATH}/{subject_name}"
-    os.makedirs(folder, exist_ok=True)
+{topic_name}
+
+Based on:
+{context}
+
+Make it clear, exam-focused, and concise.
+"""
+
+    return llm.invoke(prompt).content
+
+def save_summary(summary_text, subject_name, topic_name):
     
-    safe_name = topic_name.replace(" ", "_").replace("/", "-")
-    file_path = f"{folder}/{safe_name}.txt"
+    subject_folder = os.path.join(OUTPUTS_PATH, subject_name.replace(" ", "_"))
+    os.makedirs(subject_folder, exist_ok=True)
+    
+    
+    clean_topic = "".join(c for c in topic_name if c.isalnum() or c in (' ', '_')).strip()
+    clean_topic = clean_topic[:50]
+    
+    file_name = f"{clean_topic}_summary.txt".replace(" ", "_")
+    file_path = os.path.join(subject_folder, file_name)
     
     with open(file_path, "w", encoding="utf-8") as f:
-        f.write(f"Topic: {topic_name}\n")
-        f.write("=" * 50 + "\n\n")
-        f.write(summary)
+        f.write(summary_text)
     
     return file_path
